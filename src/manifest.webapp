@@ -1,9 +1,9 @@
 
 {
-    "version": "1.0.0-alpha.1",
-    "name": "Seed App",
-    "description": "Seed App",
-    "appType": "APP",
+    "version": "0.0.1",
+    "name": "Pact Swazi dashboard",
+    "description": "Custom dashboard for Pact Swazi",
+    "appType": "DASHBOARD_WIDGET",
     "launch_path": "index.html",
     "icons": {
         "16": "assets/icons/icon-16x16.png",
@@ -20,8 +20,5 @@
             "href": "../../../"
         }
     },
-     "authorities": [
-         "MY_APP_ADD_NEW",
-         "MY_APP_UPDATE",
-         "MY_APP_DELETE"]
+     "authorities": []
 }
