@@ -17,7 +17,6 @@ export class OuSelectionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log({ selectionDialogData: this.selectionDialogData });
     this.orgUnitFilterConfig = {
       singleSelection: false,
       showUserOrgUnitSection: true,
