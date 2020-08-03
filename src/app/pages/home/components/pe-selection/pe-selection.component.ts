@@ -20,12 +20,11 @@ export class PeSelectionComponent implements OnInit {
     this.periodFilterConfig = {
       singleSelection: false,
       emitOnSelection: false,
-      childrenPeriodSortOrder: 'ASC',
       allowDateRangeSelection: false,
       allowRelativePeriodSelection: false,
       allowFixedPeriodSelection: true,
+      contentHeight: '300px',
     };
-    console.log({ selectionDialogData: this.selectionDialogData });
   }
 
   onFilterUpdate(selectedPeriods, action: string) {

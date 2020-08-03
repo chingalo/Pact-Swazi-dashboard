@@ -27,7 +27,7 @@ export class OuSelectionComponent implements OnInit {
       reportUse: false,
       batchSize: 400,
       hideActionButtons: false,
-      contentHeight: '500px',
+      contentHeight: '400px',
       emitOnSelection: false,
     };
   }
