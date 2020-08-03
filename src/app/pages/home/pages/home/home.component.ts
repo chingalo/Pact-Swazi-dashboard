@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import * as Highcharts from 'highcharts';
-import * as Exporting from 'highcharts/modules/exporting';
-// Initialize exporting module.
-// Exporting(Highcharts);
-
 import { MatDialog } from '@angular/material/dialog';
 import { PeSelectionComponent } from '../../components/pe-selection/pe-selection.component';
-
 import { OuSelectionComponent } from '../../components/ou-selection/ou-selection.component';
-
-import { DEFAULT_CHART } from '../../helpers/get-char-object';
+import {
+  getDefaultPeriodSelections,
+  getDefaultOrganisationUnitSelections,
+} from '../../helpers/get-default-selections';
 
 @Component({
   selector: 'app-home',
@@ -17,14 +13,19 @@ import { DEFAULT_CHART } from '../../helpers/get-char-object';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private dialog: MatDialog) {}
-
   selectedPeriods: any;
   selectedOrgUnitItems: any;
 
+  //@TODO using store to get data
+  isLoading: boolean;
+  analytics: any;
+
+  constructor(private dialog: MatDialog) {}
+
   ngOnInit() {
-    this.selectedPeriods = [];
-    this.selectedOrgUnitItems = [];
+    this.selectedPeriods = getDefaultPeriodSelections();
+    this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections();
+    this.updateChart();
   }
 
   openOrganisationUnitFilter() {
@@ -38,10 +39,11 @@ export class HomeComponent implements OnInit {
       },
     });
     selectionDialog.afterClosed().subscribe((dialogData: any) => {
-      console.log({ dialogData });
+      console.log(dialogData.action);
       if (dialogData && dialogData.action) {
         this.selectedOrgUnitItems =
           dialogData.selectedOrgUnitItems.items || this.selectedOrgUnitItems;
+        this.updateChart();
       }
     });
   }
@@ -60,11 +62,21 @@ export class HomeComponent implements OnInit {
       if (dialogData && dialogData.action && dialogData.action === 'UPDATE') {
         this.selectedPeriods =
           dialogData.selectedPeriods.items || this.selectedPeriods;
+        this.updateChart();
       }
     });
   }
-
   updateChart() {
-    // Highcharts.chart(DEFAULT_CHART);
+    if (
+      this.selectedOrgUnitItems &&
+      this.selectedOrgUnitItems.length > 0 &&
+      this.selectedPeriods &&
+      this.selectedPeriods.length > 0
+    ) {
+      this.isLoading = true;
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1 * 1000);
+    }
   }
 }

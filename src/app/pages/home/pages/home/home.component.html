@@ -2,19 +2,19 @@
   <div class="row">
     <div class="col-12">
       <button mat-stroked-button (click)="openOrganisationUnitFilter()">
-        LOCATION</button
+        Organisation Unit</button
       >&nbsp;&nbsp;
       <button mat-stroked-button (click)="openPeriodFilter()">
-        PERIOD</button
-      >&nbsp;&nbsp;
-      <button mat-stroked-button (click)="updateChart()">
-        UPDATE
+        Period
       </button>
-      <div>
-        <div id="chart-data"></div>
+      <div class="dashboard-chart">
+        <div *ngIf="isLoading">
+          <app-loader></app-loader>
+        </div>
+        <div *ngIf="!isLoading">
+          <app-dashboard-chart [analytics]="analytics"></app-dashboard-chart>
+        </div>
       </div>
-      <div>selectedOrgUnitItems :{{ selectedOrgUnitItems | json }}</div>
-      <div>selectedPeriods :{{ selectedPeriods | json }}</div>
     </div>
   </div>
 </div>
