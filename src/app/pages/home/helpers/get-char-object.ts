@@ -1,76 +1,32 @@
-export const DEFAULT_CHART = {
-  chart: {
-    renderTo: 'chart-data',
-    type: 'column',
-  },
-  title: {
-    text: 'Stacked column chart',
-  },
-  xAxis: {
-    categories: ['OVC HIV Status reported', 'Uknown', 'HIV status type'],
-  },
-  yAxis: {
-    min: 0,
-    title: {
-      text: '',
-    },
-    stackLabels: {
-      enabled: true,
-      style: {
-        fontWeight: 'bold',
-        color: 'gray',
-      },
-    },
-  },
-  tooltip: {
-    headerFormat: '<b>{point.x}</b><br/>',
-    pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}',
-  },
-  plotOptions: {
-    column: {
-      stacking: 'normal',
-      dataLabels: {
-        enabled: true,
-      },
-      dataSorting: {
-        enabled: false,
-      },
-    },
-  },
-  series: [
-    {
-      name: 'OVC HIV status reported',
-      color: '#4472C4',
-      data: [44027],
-    },
-    {
-      name: 'At risk',
-      color: '#ED7D31',
-      data: ['', 3516],
-    },
-    {
-      name: 'Not at Risk',
-      color: '#4472C4',
-      data: ['', 5900],
-    },
-    {
-      name: 'Not on TX',
-      data: ['', '', ''],
-    },
-    {
-      name: 'On TX',
-      color: '#A5A5A5',
-      data: ['', '', 1917],
-    },
-    {
-      name: 'HIV positive',
-      color: '#ED7D31',
-      data: ['', '', 1925],
-    },
-    {
-      name: 'HIV Negative',
-      color: '#4472C4',
-      data: ['', '', 37452],
-    },
-  ],
-};
+import * as _ from 'lodash';
+import { DEFAULT_CHART_OBJECT, DATA_CONFIG } from './get-chart-data-config';
+
+export function getChartObject(analytics: any) {
+  console.log({ analytics });
+  let chartObject = DEFAULT_CHART_OBJECT;
+  const categories = _.map(DATA_CONFIG, (config: any) => config.name);
+  let count = -1;
+  const series = _.flattenDeep(
+    _.map(DATA_CONFIG, (config: any) => {
+      count++;
+      return _.map(config.series || [], (seriesConfig: any) => {
+        const value = getRowValue(analytics, seriesConfig.id || '');
+        const data = _.map(_.range(count), () => '');
+        return {
+          name: seriesConfig.name || '',
+          color: seriesConfig.color || '',
+          data: _.flattenDeep(_.concat(data, value)),
+        };
+      });
+    })
+  );
+  return {
+    ...chartObject,
+    xAxis: { ...chartObject.xAxis, categories },
+    series,
+  };
+}
+
+function getRowValue(analytics: any, id: string) {
+  return _.random(200, 1000);
+}
