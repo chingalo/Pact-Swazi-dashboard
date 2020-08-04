@@ -1,7 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
-import * as Exporting from 'highcharts/modules/exporting';
-Exporting(Highcharts);
 import { getChartObject } from '../../helpers/get-char-object';
 
 @Component({
@@ -21,8 +19,7 @@ export class DashboardChartComponent implements OnInit {
   }
 
   updateChart() {
-    const chartObject = getChartObject(this.analytics);
-    console.log(chartObject);
+    const chartObject: any = getChartObject(this.analytics);
     Highcharts.chart(chartObject);
   }
 }

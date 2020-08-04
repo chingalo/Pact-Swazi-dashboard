@@ -24,6 +24,12 @@ export function getChartObject(analytics: any) {
     ...chartObject,
     xAxis: { ...chartObject.xAxis, categories },
     series,
+    credits: {
+      enabled: false,
+    },
+    exporting: {
+      enabled: true,
+    },
   };
 }
 
