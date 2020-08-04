@@ -26,8 +26,6 @@ import {
 export class HomeComponent implements OnInit {
   selectedPeriods: any;
   selectedOrgUnitItems: any;
-
-  //@TODO using store to get data
   isLoading$: Observable<boolean>;
   analytics$: Observable<any>;
   analyticsError$: Observable<any>;
