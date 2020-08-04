@@ -34,5 +34,6 @@ export function getChartObject(analytics: any) {
 }
 
 function getRowValue(analytics: any, id: string) {
+  console.log({ id });
   return _.random(200, 1000);
 }
