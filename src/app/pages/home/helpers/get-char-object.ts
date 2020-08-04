@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import { DEFAULT_CHART_OBJECT, DATA_CONFIG } from './get-chart-data-config';
 
 export function getChartObject(analytics: any) {
-  console.log({ analytics });
   let chartObject = DEFAULT_CHART_OBJECT;
   const categories = _.map(DATA_CONFIG, (config: any) => config.name);
   let count = -1;
@@ -34,6 +33,6 @@ export function getChartObject(analytics: any) {
 }
 
 function getRowValue(analytics: any, id: string) {
-  console.log({ id });
+  console.log({ id, analytics });
   return _.random(200, 1000);
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import HC_exporting from 'highcharts/modules/exporting';
+import DownloadingModule from 'highcharts/modules/export-data.js';
 HC_exporting(Highcharts);
+DownloadingModule(Highcharts);
 
 import { getChartObject } from '../../helpers/get-char-object';
 
