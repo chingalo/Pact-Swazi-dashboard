@@ -93,9 +93,6 @@ export class HomeComponent implements OnInit {
         this.selectedPeriods
       );
       this.store.dispatch(loadDashboardData({ pe, dx, ou }));
-      setTimeout(() => {
-        this.store.dispatch(addDashboardData({ analytics: [] }));
-      }, 1 * 1000);
     }
   }
 }

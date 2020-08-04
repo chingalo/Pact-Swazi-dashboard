@@ -26,6 +26,5 @@ export function getAnlyticsParameters(
       )
     )
   );
-  console.log({ dx, pe, ou });
   return { dx, pe, ou };
 }

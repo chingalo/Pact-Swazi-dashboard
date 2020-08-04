@@ -2,6 +2,13 @@ import * as _ from 'lodash';
 import { DEFAULT_CHART_OBJECT, DATA_CONFIG } from './get-chart-data-config';
 
 export function getChartObject(analytics: any) {
+  const valueIndex = getIndexFromHeadersMetadata(
+    analytics.headers || [],
+    'value'
+  );
+  const dxIndex = getIndexFromHeadersMetadata(analytics.headers || [], 'dx');
+
+  const rows = analytics.rows || [];
   let chartObject = DEFAULT_CHART_OBJECT;
   const categories = _.map(DATA_CONFIG, (config: any) => config.name);
   let count = -1;
@@ -9,7 +16,12 @@ export function getChartObject(analytics: any) {
     _.map(DATA_CONFIG, (config: any) => {
       count++;
       return _.map(config.series || [], (seriesConfig: any) => {
-        const value = getRowValue(analytics, seriesConfig.id || '');
+        const value = getRowValue(
+          rows,
+          dxIndex,
+          valueIndex,
+          seriesConfig.id || ''
+        );
         const data = _.map(_.range(count), () => '');
         return {
           name: seriesConfig.name || '',
@@ -32,7 +44,27 @@ export function getChartObject(analytics: any) {
   };
 }
 
-function getRowValue(analytics: any, id: string) {
-  console.log({ id, analytics });
-  return _.random(200, 1000);
+function getRowValue(
+  rows: any,
+  dxIndex: number,
+  valueIndex: number,
+  id: string
+) {
+  const selectedRow = _.filter(rows, (row: any) => {
+    return row && row[dxIndex] && row[dxIndex] === id;
+  });
+  let value = 0;
+  if (id !== '' && selectedRow.length > 0) {
+    for (const data of selectedRow) {
+      value += parseInt(data[valueIndex] || 0, 10);
+    }
+  }
+  return value;
+}
+
+function getIndexFromHeadersMetadata(headers: any, value: string) {
+  return _.findIndex(
+    headers,
+    (header: any) => header && header.name && header.name === value
+  );
 }
