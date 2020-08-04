@@ -19,8 +19,8 @@ export class OuSelectionComponent implements OnInit {
   ngOnInit(): void {
     this.orgUnitFilterConfig = {
       singleSelection: false,
-      showUserOrgUnitSection: true,
-      showOrgUnitLevelGroupSection: true,
+      showUserOrgUnitSection: false,
+      showOrgUnitLevelGroupSection: false,
       showOrgUnitGroupSection: false,
       showOrgUnitLevelSection: true,
       reportUse: false,

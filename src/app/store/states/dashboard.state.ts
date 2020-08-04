@@ -6,5 +6,6 @@ export interface DashboardDataState extends BaseState {
 
 export const initialDashboardDataState: DashboardDataState = {
   ...initialBaseState,
+  loading: true,
   analytics: null,
 };

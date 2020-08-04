@@ -2,6 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { getRootState, State } from '../reducers';
 import { UserState } from '../states/user.state';
 import { User } from '@iapps/ngx-dhis2-http-client';
+import * as _ from 'lodash';
 
 export const getUserState = createSelector(
   getRootState,
@@ -26,6 +27,18 @@ export const getCurrentUserLoaded = createSelector(
 export const getCurrentUserLoadingError = createSelector(
   getUserState,
   (state: UserState) => state.error
+);
+
+export const getCurrentUserOrganisationUnits = createSelector(
+  getCurrentUser,
+  (currentUser: User) => {
+    return currentUser
+      ? _.concat(
+          currentUser.organisationUnits || [],
+          currentUser.dataViewOrganisationUnits || []
+        )
+      : [];
+  }
 );
 
 export const getCurrentUserManagementAuthoritiesStatus = createSelector(

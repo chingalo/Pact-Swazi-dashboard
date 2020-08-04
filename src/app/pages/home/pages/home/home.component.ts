@@ -5,7 +5,7 @@ import { OuSelectionComponent } from '../../components/ou-selection/ou-selection
 import {
   getDefaultPeriodSelections,
   getDefaultOrganisationUnitSelections,
-} from '../../helpers/get-default-selections';
+} from '../../helpers/get-dashboard-chart-selections';
 
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/store/reducers';
@@ -17,6 +17,7 @@ import {
   getCurrentAnalytics,
   getCurrentAnalyticsError,
 } from 'src/app/store/selectors/dashboard-data.selectors';
+import { getCurrentUserOrganisationUnits } from 'src/app/store/selectors';
 
 @Component({
   selector: 'app-home',
@@ -37,8 +38,22 @@ export class HomeComponent implements OnInit {
     this.analytics$ = this.store.select(getCurrentAnalytics);
     this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.selectedPeriods = getDefaultPeriodSelections();
-    this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections();
-    this.updateChart();
+    this.store
+      .select(getCurrentUserOrganisationUnits)
+      .subscribe((userOrgnisationUnits) => {
+        if (
+          !this.selectedOrgUnitItems &&
+          userOrgnisationUnits &&
+          userOrgnisationUnits.length > 0
+        ) {
+          this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections(
+            userOrgnisationUnits
+          );
+          this.updateChart();
+        } else {
+          'here';
+        }
+      });
   }
 
   openOrganisationUnitFilter() {
@@ -52,7 +67,6 @@ export class HomeComponent implements OnInit {
       },
     });
     selectionDialog.afterClosed().subscribe((dialogData: any) => {
-      console.log(dialogData.action);
       if (dialogData && dialogData.action) {
         this.selectedOrgUnitItems =
           dialogData.selectedOrgUnitItems.items || this.selectedOrgUnitItems;
@@ -80,17 +94,10 @@ export class HomeComponent implements OnInit {
     });
   }
   updateChart() {
-    if (
-      this.selectedOrgUnitItems &&
-      this.selectedOrgUnitItems.length > 0 &&
-      this.selectedPeriods &&
-      this.selectedPeriods.length > 0
-    ) {
-      const { pe, dx, ou } = getAnlyticsParameters(
-        this.selectedOrgUnitItems,
-        this.selectedPeriods
-      );
-      this.store.dispatch(loadDashboardData({ pe, dx, ou }));
-    }
+    const { pe, dx, ou } = getAnlyticsParameters(
+      this.selectedOrgUnitItems,
+      this.selectedPeriods
+    );
+    this.store.dispatch(loadDashboardData({ pe, dx, ou }));
   }
 }
