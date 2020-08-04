@@ -7,6 +7,17 @@ import {
   getDefaultOrganisationUnitSelections,
 } from '../../helpers/get-default-selections';
 
+import { Store } from '@ngrx/store';
+import { State } from 'src/app/store/reducers';
+import { loadDashboardData, addDashboardData } from 'src/app/store/actions';
+import { Observable } from 'rxjs';
+import { getAnlyticsParameters } from '../../helpers/get-anlytics-parameters';
+import {
+  getCurrentAnalyticsLoadingStatus,
+  getCurrentAnalytics,
+  getCurrentAnalyticsError,
+} from 'src/app/store/selectors/dashboard-data.selectors';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,12 +28,16 @@ export class HomeComponent implements OnInit {
   selectedOrgUnitItems: any;
 
   //@TODO using store to get data
-  isLoading: boolean;
-  analytics: any;
+  isLoading$: Observable<boolean>;
+  analytics$: Observable<any>;
+  analyticsError$: Observable<any>;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private store: Store<State>) {}
 
   ngOnInit() {
+    this.isLoading$ = this.store.select(getCurrentAnalyticsLoadingStatus);
+    this.analytics$ = this.store.select(getCurrentAnalytics);
+    this.analyticsError$ = this.store.select(getCurrentAnalyticsError);
     this.selectedPeriods = getDefaultPeriodSelections();
     this.selectedOrgUnitItems = getDefaultOrganisationUnitSelections();
     this.updateChart();
@@ -73,9 +88,13 @@ export class HomeComponent implements OnInit {
       this.selectedPeriods &&
       this.selectedPeriods.length > 0
     ) {
-      this.isLoading = true;
+      const { pe, dx, ou } = getAnlyticsParameters(
+        this.selectedOrgUnitItems,
+        this.selectedPeriods
+      );
+      this.store.dispatch(loadDashboardData({ pe, dx, ou }));
       setTimeout(() => {
-        this.isLoading = false;
+        this.store.dispatch(addDashboardData({ analytics: [] }));
       }, 1 * 1000);
     }
   }

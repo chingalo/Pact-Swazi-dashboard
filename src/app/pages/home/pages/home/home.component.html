@@ -8,11 +8,22 @@
         Period
       </button>
       <div class="dashboard-chart">
-        <div *ngIf="isLoading">
+        <div *ngIf="isLoading$ | async">
           <app-loader></app-loader>
         </div>
-        <div *ngIf="!isLoading">
-          <app-dashboard-chart [analytics]="analytics"></app-dashboard-chart>
+        <div *ngIf="!(isLoading$ | async)">
+          <div *ngIf="analyticsError$ | async">
+            <div class="analyticsError">
+              <mat-card>{{ analyticsError$ | async | json }}</mat-card>
+            </div>
+          </div>
+          <div *ngIf="!(analyticsError$ | async)">
+            <mat-card>
+              <app-dashboard-chart
+                [analytics]="analytics$ | async"
+              ></app-dashboard-chart>
+            </mat-card>
+          </div>
         </div>
       </div>
     </div>
