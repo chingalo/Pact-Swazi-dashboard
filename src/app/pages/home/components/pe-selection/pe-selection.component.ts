@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PeriodFilterConfig } from '@iapps/ngx-dhis2-period-filter';
+import { PeriodFilterConfig } from 'src/app/ngx-dhis2-period-filter/models/period-filter-config.model';
 
 @Component({
   selector: 'app-pe-selection',
@@ -10,20 +10,23 @@ import { PeriodFilterConfig } from '@iapps/ngx-dhis2-period-filter';
 export class PeSelectionComponent implements OnInit {
   periodFilterConfig: PeriodFilterConfig;
   selectedPeriods = [];
+  defaultPeriodTypes: string[];
 
   constructor(
     private dialogRef: MatDialogRef<PeSelectionComponent>,
     @Inject(MAT_DIALOG_DATA) public selectionDialogData: any
-  ) {}
+  ) {
+    this.defaultPeriodTypes = ['SixMonthlyApril'];
+  }
 
   ngOnInit(): void {
     this.periodFilterConfig = {
-      singleSelection: false,
+      singleSelection: true,
       emitOnSelection: false,
       allowDateRangeSelection: false,
       allowRelativePeriodSelection: false,
       allowFixedPeriodSelection: true,
-      contentHeight: '300px',
+      contentHeight: '400px',
     };
   }
 
