@@ -6,7 +6,6 @@ export function getPeriodTypesByFilterType(
   filterType: any,
   defaultPeriodType = []
 ) {
-  console.log({ periodTypes, defaultPeriodType });
   periodTypes =
     defaultPeriodType.length > 0
       ? _.filter(
