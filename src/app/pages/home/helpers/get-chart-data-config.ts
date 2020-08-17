@@ -1,26 +1,94 @@
 export const DATA_CONFIG = [
   {
-    name: 'OVC HIV Status reported',
+    name: '9-14',
     series: [
-      { id: 'apuD7SIZMYs', color: '#1177A5', name: 'OVC HIV status reported' },
+      {
+        id: 'P5dqXxcCrW0',
+        color: '#7F1542',
+        name: '9-14 Reached',
+        type: 'column',
+      },
+      {
+        id: 'dxOcABjDdir',
+        color: '#02AED9',
+        name: '9-14 Target',
+        type: 'column',
+      },
+      {
+        id: 'aDLLRq8yBfa',
+        color: '#A5A5A5',
+        name: '9-14 Reached Vs Target',
+        type: 'spline',
+      },
     ],
   },
   {
-    name: 'Uknown',
+    name: '15-19',
     series: [
-      { id: 'PKqhZwWz7YS', color: '#FDCB0B', name: 'At risk' },
-      { id: 'swODbc3PXIu', color: '#D2A929', name: 'Not at Risk' },
-      { id: 'onw7yDC8PFO', color: '#ED7D31', name: 'Undisclosed' },
-      { id: '', color: '#FCF6D4', name: 'Not screened' },
+      {
+        id: 'DKOJF7MsNCi',
+        color: '#7F1542',
+        name: '15-19 Reached',
+        type: 'column',
+      },
+      {
+        id: 'bIDZhM3OhBl',
+        color: '#02AED9',
+        name: '15-19 Target',
+        type: 'column',
+      },
+      {
+        id: 'LZuNabo7rnG',
+        color: '#A5A5A5',
+        name: '15-19 Reached Vs Target',
+        type: 'spline',
+      },
     ],
   },
   {
-    name: 'HIV status type',
+    name: '20-24',
     series: [
-      { id: 'p3fKUkL8Har', color: '#E39824', name: 'Not on TX' },
-      { id: 'cDtUveNmDeB', color: '#E08725', name: 'On TX' },
-      { id: 'U0NGzwq3KCP', color: '#ED7D31', name: 'HIV positive' },
-      { id: 'uwIYNrfOBj7', color: '#1177A5', name: 'HIV Negative' },
+      {
+        id: 'sKwvImO4g2o',
+        color: '#7F1542',
+        name: '20-24 Reached',
+        type: 'column',
+      },
+      {
+        id: 'uJoXpEsQKSM',
+        color: '#02AED9',
+        name: '20-24 Target',
+        type: 'column',
+      },
+      {
+        id: 'PU3Nzk9eGPH',
+        color: '#A5A5A5',
+        name: '20-24 Reached Vs Target',
+        type: 'spline',
+      },
+    ],
+  },
+  {
+    name: '25-19',
+    series: [
+      {
+        id: 'Vx9hQDe6sVC',
+        color: '#7F1542',
+        name: '25-19 Reached',
+        type: 'column',
+      },
+      {
+        id: 'RZINkAqAMPX',
+        color: '#02AED9',
+        name: '25-19 Target',
+        type: 'column',
+      },
+      {
+        id: 'i9CcAtcmHdJ',
+        color: '#A5A5A5',
+        name: '25-19 Reached Vs Target',
+        type: 'spline',
+      },
     ],
   },
 ];
@@ -28,41 +96,36 @@ export const DATA_CONFIG = [
 export const DEFAULT_CHART_OBJECT = {
   chart: {
     renderTo: 'chart-data',
-    type: 'column',
   },
   title: {
-    text: 'OVC_HIVSTAT',
+    text: 'PP_PREV Performance by Age by Target - Quarterly',
   },
   xAxis: {
     categories: [],
   },
-  yAxis: {
-    min: 0,
-    title: {
-      text: '',
-    },
-    stackLabels: {
-      enabled: true,
-      style: {
-        fontWeight: 'bold',
-        color: 'gray',
+  yAxis: [
+    {
+      labels: {
+        format: '{value} %',
       },
+      title: {
+        text: 'Percent reach',
+      },
+      opposite: true,
     },
-  },
+    {
+      gridLineWidth: 0,
+      title: {
+        text: 'Nummber of beneficiaries',
+      },
+      labels: {
+        format: '{value}',
+      },
+      opposite: false,
+    },
+  ],
   tooltip: {
-    headerFormat: '<b>{point.x}</b><br/>',
-    pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}',
-  },
-  plotOptions: {
-    column: {
-      stacking: 'normal',
-      dataLabels: {
-        enabled: true,
-      },
-      dataSorting: {
-        enabled: false,
-      },
-    },
+    shared: true,
   },
   series: [],
 };

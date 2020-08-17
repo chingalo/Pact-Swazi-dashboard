@@ -7,30 +7,49 @@ export function getChartObject(analytics: any) {
     'value'
   );
   const dxIndex = getIndexFromHeadersMetadata(analytics.headers || [], 'dx');
-
   const rows = analytics.rows || [];
   let chartObject = DEFAULT_CHART_OBJECT;
   const categories = _.map(DATA_CONFIG, (config: any) => config.name);
   let count = -1;
-  const series = _.flattenDeep(
-    _.map(DATA_CONFIG, (config: any) => {
-      count++;
-      return _.map(config.series || [], (seriesConfig: any) => {
-        const value = getRowValue(
-          rows,
-          dxIndex,
-          valueIndex,
-          seriesConfig.id || ''
-        );
-        const data = _.map(_.range(count), () => '');
-        return {
-          name: seriesConfig.name || '',
-          color: seriesConfig.color || '',
-          data: _.flattenDeep(_.concat(data, value)),
-        };
-      });
-    })
-  );
+  // const series = _.flattenDeep(
+  //   _.map(DATA_CONFIG, (config: any) => {
+  //     count++;
+  //     return _.map(config.series || [], (seriesConfig: any) => {
+  //       const value = getRowValue(
+  //         rows,
+  //         dxIndex,
+  //         valueIndex,
+  //         seriesConfig.id || ''
+  //       );
+  //       const data = _.map(_.range(count), () => '');
+  //       return {
+  //         name: seriesConfig.name || '',
+  //         color: seriesConfig.color || '',
+  //         data: _.flattenDeep(_.concat(data, value)),
+  //       };
+  //     });
+  //   })
+  // );
+  const series = [
+    {
+      name: 'Reached',
+      type: 'column',
+      yAxis: 1,
+      data: [[12], [22], [16], [13]],
+    },
+    {
+      name: 'Target',
+      type: 'column',
+      yAxis: 1,
+      data: [[12], [13], [45], [89]],
+    },
+    {
+      name: 'Reached Vs Target',
+      type: 'spline',
+      color: 'black',
+      data: [87, 88, 85, 90],
+    },
+  ];
   return {
     ...chartObject,
     xAxis: { ...chartObject.xAxis, categories },
