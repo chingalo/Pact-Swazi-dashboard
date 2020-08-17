@@ -55,9 +55,7 @@ function getSeriesDataByConfigIndex(
   let data = [];
   const seriesConfigs = getSeriesConfigByIndex(DATA_CONFIG, index);
   if (seriesConfigs && seriesConfigs.length > 0) {
-    const seriesConfig = seriesConfigs[0];
-    console.log(seriesConfig);
-    data = _.map(seriesConfigs, (seriesConfig) => {
+    data = _.map(seriesConfigs, (seriesConfig: any) => {
       const value = getRowValue(
         rows,
         dxIndex,
@@ -70,9 +68,9 @@ function getSeriesDataByConfigIndex(
   return data;
 }
 
-function getSeriesConfigByIndex(DATA_CONFIG, index) {
+function getSeriesConfigByIndex(DATA_CONFIG: any, index: number) {
   return _.flattenDeep(
-    _.map(DATA_CONFIG, (config) => {
+    _.map(DATA_CONFIG, (config: any) => {
       const series = config.series || [];
       return series.length > index ? series[index] : [];
     })
