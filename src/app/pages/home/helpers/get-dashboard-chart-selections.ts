@@ -11,8 +11,12 @@ export function getDefaultPeriodSelections(today?: Date) {
   const monthIndex = date.getMonth();
   const currentYear = date.getFullYear();
   const id =
-    monthIndex >= 3 && monthIndex <= 8
-      ? `${currentYear - 1}AprilS2`
-      : `${currentYear}AprilS1`;
-  return [{ id, type: 'SixMonthlyApril' }];
+    monthIndex <= 2
+      ? `${currentYear - 1}Q4`
+      : monthIndex <= 5
+      ? `${currentYear}Q1`
+      : monthIndex <= 8
+      ? `${currentYear}Q2`
+      : `${currentYear}Q3`;
+  return [{ id, type: 'Quarterly' }];
 }
