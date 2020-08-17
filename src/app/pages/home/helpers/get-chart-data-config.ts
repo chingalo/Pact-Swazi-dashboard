@@ -3,7 +3,7 @@ export const DATA_CONFIG = [
     name: '9-14',
     series: [
       {
-        id: 'P5dqXxcCrW0',
+        id: 'Vo2ZW4LC01Q',
         color: '#7F1542',
         name: 'Reached',
         type: 'column',
@@ -26,7 +26,7 @@ export const DATA_CONFIG = [
     name: '15-19',
     series: [
       {
-        id: 'DKOJF7MsNCi',
+        id: 'FKL2G09oo4n',
         color: '#7F1542',
         name: 'Reached',
         type: 'column',
@@ -49,7 +49,7 @@ export const DATA_CONFIG = [
     name: '20-24',
     series: [
       {
-        id: 'sKwvImO4g2o',
+        id: 'ezY5aFdgKOt',
         color: '#7F1542',
         name: 'Reached',
         type: 'column',
@@ -72,7 +72,7 @@ export const DATA_CONFIG = [
     name: '25-19',
     series: [
       {
-        id: 'Vx9hQDe6sVC',
+        id: 'dUJMIguliHv',
         color: '#7F1542',
         name: 'Reached',
         type: 'column',
