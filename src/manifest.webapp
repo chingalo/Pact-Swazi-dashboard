@@ -1,7 +1,7 @@
 
 {
     "version": "1.0.0",
-    "name": "Pact Swazi dashboard pp_prev_quarterly",
+    "name": "Pact Swazi dashboard pp_prev_semi-annually",
     "description": "Custom dashboard for Pact Swazi",
     "appType": "DASHBOARD_WIDGET",
     "launch_path": "index.html",
