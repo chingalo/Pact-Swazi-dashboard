@@ -10,46 +10,29 @@ export function getChartObject(analytics: any) {
   const rows = analytics.rows || [];
   let chartObject = DEFAULT_CHART_OBJECT;
   const categories = _.map(DATA_CONFIG, (config: any) => config.name);
-  let count = -1;
-  // const series = _.flattenDeep(
-  //   _.map(DATA_CONFIG, (config: any) => {
-  //     count++;
-  //     return _.map(config.series || [], (seriesConfig: any) => {
-  //       const value = getRowValue(
-  //         rows,
-  //         dxIndex,
-  //         valueIndex,
-  //         seriesConfig.id || ''
-  //       );
-  //       const data = _.map(_.range(count), () => '');
-  //       return {
-  //         name: seriesConfig.name || '',
-  //         color: seriesConfig.color || '',
-  //         data: _.flattenDeep(_.concat(data, value)),
-  //       };
-  //     });
-  //   })
-  // );
   const series = [
     {
       name: 'Reached',
       type: 'column',
+      color: '#7F1542',
       yAxis: 1,
-      data: [[12], [22], [16], [13]],
+      data: getSeriesDataByConfigIndex(0, rows, dxIndex, valueIndex),
     },
     {
       name: 'Target',
       type: 'column',
+      color: '#02AED9',
       yAxis: 1,
-      data: [[12], [13], [45], [89]],
+      data: getSeriesDataByConfigIndex(1, rows, dxIndex, valueIndex),
     },
     {
       name: 'Reached Vs Target',
       type: 'spline',
-      color: 'black',
-      data: [87, 88, 85, 90],
+      color: '#A5A5A5',
+      data: getSeriesDataByConfigIndex(2, rows, dxIndex, valueIndex),
     },
   ];
+
   return {
     ...chartObject,
     xAxis: { ...chartObject.xAxis, categories },
@@ -61,6 +44,39 @@ export function getChartObject(analytics: any) {
       enabled: true,
     },
   };
+}
+
+function getSeriesDataByConfigIndex(
+  index: number,
+  rows: any,
+  dxIndex: number,
+  valueIndex: number
+) {
+  let data = [];
+  const seriesConfigs = getSeriesConfigByIndex(DATA_CONFIG, index);
+  if (seriesConfigs && seriesConfigs.length > 0) {
+    const seriesConfig = seriesConfigs[0];
+    console.log(seriesConfig);
+    data = _.map(seriesConfigs, (seriesConfig) => {
+      const value = getRowValue(
+        rows,
+        dxIndex,
+        valueIndex,
+        seriesConfig.id || ''
+      );
+      return [value];
+    });
+  }
+  return data;
+}
+
+function getSeriesConfigByIndex(DATA_CONFIG, index) {
+  return _.flattenDeep(
+    _.map(DATA_CONFIG, (config) => {
+      const series = config.series || [];
+      return series.length > index ? series[index] : [];
+    })
+  );
 }
 
 function getRowValue(
