@@ -98,7 +98,7 @@ export const DEFAULT_CHART_OBJECT = {
     renderTo: 'chart-data',
   },
   title: {
-    text: 'PP_PREV Performance by Age by Target - Quarterly',
+    text: 'PP_PREV Performance by Age by Target - Semi-annually',
   },
   xAxis: {
     categories: [],
