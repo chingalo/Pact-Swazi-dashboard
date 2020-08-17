@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --aot && cd dist/pact-swazi-dashboard-widget && zip -r -D pact-swazi-dashboard-widget.zip .",
+    "build": "ng build --prod --aot && cd dist/pact-swazi-dashboard-widget && zip -r -D pact-swazi-dashboard-widget-pp-prev-quarterly.zip .",
     "test": "ng test",
     "test:travis": "ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
